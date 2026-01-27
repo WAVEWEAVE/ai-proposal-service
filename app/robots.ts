@@ -11,8 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/proposal',
           '/api',
-          '/login',
-          '/signup',
         ],
       },
     ],

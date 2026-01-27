@@ -48,9 +48,9 @@ const DraftsPage = () => {
       toast.error(error);
       console.error('[제안서 조회 실패]', error);
       
-      // 인증 오류 시 로그인 페이지로
+      // 인증 오류 시 메인 페이지로
       if (error.includes('로그인')) {
-        setTimeout(() => router.push('/login'), 2000);
+        setTimeout(() => router.push('/'), 2000);
       }
     } else {
       setProposals(data || []);
@@ -96,9 +96,9 @@ const DraftsPage = () => {
       toast.error(error || '삭제에 실패했습니다.');
       console.error('[삭제 실패]', error);
       
-      // 인증 오류 시 로그인 페이지로
+      // 인증 오류 시 메인 페이지로
       if (error?.includes('로그인')) {
-        setTimeout(() => router.push('/login'), 2000);
+        setTimeout(() => router.push('/'), 2000);
       }
     }
   };

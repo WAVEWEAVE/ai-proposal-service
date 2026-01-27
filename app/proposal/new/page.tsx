@@ -120,9 +120,9 @@ const NewProposalPage = () => {
       });
       console.error('[임시저장 실패]', error);
       
-      // 인증 오류 시 로그인 페이지로
+      // 인증 오류 시 메인 페이지로
       if (error.includes('로그인')) {
-        setTimeout(() => router.push('/login'), 2000);
+        setTimeout(() => router.push('/'), 2000);
       }
       return;
     }

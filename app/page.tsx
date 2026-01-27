@@ -20,44 +20,34 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Clock, Plus, Trash2 } from 'lucide-react';
-import { getCurrentUser, signOut } from '@/lib/supabase/auth';
 import { getMyProposals, deleteProposal } from '@/lib/supabase/proposals';
 import type { Proposal } from '@/lib/supabase/types';
 import { toast } from 'sonner';
-
-/**
- * 사용자 타입
- */
-interface User {
-  email: string;
-  name?: string;
-}
+import { useAuthStore } from '@/lib/store/auth';
 
 /**
  * 메인 페이지 컴포넌트
  */
 const HomePage = () => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, isLoading, initialize, reset } = useAuthStore();
   const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   /**
-   * 사용자 세션 확인 및 데이터 로드
+   * 인증 상태 초기화 및 데이터 로드
    */
   useEffect(() => {
-    async function loadData() {
-      try {
-        const currentUser = await getCurrentUser();
-        
-        if (currentUser) {
-          // 로그인한 사용자: 제안서 목록 로드
-          setUser({
-            email: currentUser.email || '',
-            name: currentUser.user_metadata?.full_name || undefined,
-          });
+    // Auth store 초기화
+    initialize();
+  }, [initialize]);
 
-          // 제안서 목록 조회
+  /**
+   * 사용자 로그인 시 제안서 로드
+   */
+  useEffect(() => {
+    async function loadProposals() {
+      if (user) {
+        try {
           const { data, error } = await getMyProposals({ limit: 50 });
           
           if (error) {
@@ -65,32 +55,29 @@ const HomePage = () => {
           } else if (data) {
             setProposals(data);
           }
+        } catch (error) {
+          console.error('[제안서 로드 실패]', error);
         }
-      } catch (error) {
-        console.error('[데이터 로드 실패]', error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        // 로그아웃 시 제안서 목록 초기화
+        setProposals([]);
       }
     }
 
-    loadData();
-  }, []);
+    if (!isLoading) {
+      loadProposals();
+    }
+  }, [user, isLoading]);
 
   /**
    * 로그아웃 핸들러
    */
   const handleLogout = async () => {
     try {
-      const result = await signOut();
-      
-      if (result.success) {
-        setUser(null);
-        setProposals([]);
-        toast.success('로그아웃되었습니다');
-        router.refresh();
-      } else {
-        toast.error(result.error || '로그아웃에 실패했습니다');
-      }
+      await reset();
+      setProposals([]);
+      toast.success('로그아웃되었습니다');
+      router.refresh();
     } catch (error) {
       console.error('[로그아웃 실패]', error);
       toast.error('로그아웃 중 오류가 발생했습니다');
@@ -175,7 +162,13 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* 헤더 */}
-      <Header user={user} onLogout={handleLogout} />
+      <Header 
+        user={user ? {
+          email: user.email,
+          name: user.user_metadata?.full_name
+        } : null} 
+        onLogout={handleLogout} 
+      />
 
       {/* 메인 컨텐츠 */}
       <main className="flex-1">
