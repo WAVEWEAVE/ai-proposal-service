@@ -347,22 +347,7 @@ const SignupPage = () => {
           </CardContent>
         </Card>
 
-        {/* 서비스 특징 요약 */}
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div className="space-y-1">
-            <p className="text-2xl font-bold text-primary">17</p>
-            <p className="text-xs text-muted-foreground">단계별 질문</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-2xl font-bold text-primary">AI</p>
-            <p className="text-xs text-muted-foreground">자동 생성</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-2xl font-bold text-primary">📋</p>
-            <p className="text-xs text-muted-foreground">원클릭 복사</p>
-          </div>
-        </div>
-
+        
         {/* 푸터 */}
         <p className="text-center text-xs text-muted-foreground">
           가입하면{' '}

@@ -18,7 +18,7 @@ export const CTASection: React.FC = () => {
       <div className="container mx-auto">
         <div className="mx-auto max-w-3xl text-center space-y-8">
           <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold">
+            <h2 className="text-4xl md:text-5xl font-extrabold">
               지금 바로 시작하세요
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground">
@@ -30,7 +30,7 @@ export const CTASection: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="h-12 px-8 text-base w-full sm:w-auto" asChild>
-              <Link href="/signup">
+              <Link href="/login">
                 첫 제안 시작하기
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>

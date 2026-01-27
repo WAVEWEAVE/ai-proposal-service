@@ -90,11 +90,11 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* 메인 타이틀 */}
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+          <div className="space-y-10">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
               플랫폼 밖에서
               <br />
-              <span className="text-primary">첫 고객을 만드는 실행력</span>
+              <span className="text-primary">첫 고객을 만드는 시작</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               17개의 간단한 질문으로 전문적인 비즈니스 제안서를 자동 생성합니다.
@@ -113,7 +113,7 @@ export const HeroSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-4">
                 {/* 전문분야 입력 */}
                 <div className="space-y-2">
                   <Label htmlFor="expertise" className="text-left block">
