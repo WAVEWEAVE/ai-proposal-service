@@ -11,9 +11,10 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ArrowLeft, Copy, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Copy, Loader2, Sparkles, Save } from 'lucide-react';
 import { toast } from 'sonner';
 import { EXAMPLE_ANSWERS, EXAMPLE_PROPOSAL } from '@/components/proposal';
+import { createProposal } from '@/lib/supabase/proposals';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -195,6 +196,44 @@ const ProposalResultPage = () => {
     toast.success('제안서 내용이 복사되었습니다.');
   };
 
+  /**
+   * 제안서 저장
+   */
+  const handleSave = async () => {
+    if (!proposalContent || !proposalData) return;
+
+    try {
+      // 제목 생성 (제안서 첫 줄 또는 기본값)
+      const firstLine = proposalContent.split('\n')[0].replace(/^#\s*/, '').trim();
+      const title = firstLine || `${proposalData.quickStart?.expertise || '제안서'} - ${new Date().toLocaleDateString()}`;
+
+      // 제안서 저장
+      const { data, error } = await createProposal({
+        title,
+        expertise: proposalData.quickStart?.expertise || '',
+        industry: proposalData.quickStart?.industry || '',
+        answers: proposalData.answers,
+        content: proposalContent,
+        status: 'completed',
+      });
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      toast.success('제안서가 저장되었습니다!');
+      
+      // 메인 페이지로 이동
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
+    } catch (error) {
+      console.error('[저장 실패]', error);
+      toast.error('제안서 저장에 실패했습니다.');
+    }
+  };
+
   // 로딩 중일 때
   if (!proposalData) {
     return (
@@ -228,6 +267,14 @@ const ProposalResultPage = () => {
                   >
                     <Copy className="w-4 h-4" />
                     복사
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleSave}
+                    className="gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    저장하기
                   </Button>
                 </>
               )}

@@ -161,9 +161,9 @@ const SignupPage = () => {
         // 이메일 확인 안내 메시지는 success 화면에서 처리
       }
 
-      // 대시보드로 이동
+      // 메인 페이지로 이동
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/');
         router.refresh(); // 서버 컴포넌트 새로고침
       }, 2000); // 성공 메시지 보여주고 2초 후 이동
     } catch (err) {

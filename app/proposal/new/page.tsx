@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 import { ProposalWizard } from '@/components/proposal';
 import { EXAMPLE_ANSWERS } from '@/components/proposal/exampleAnswers';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Lightbulb } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import Link from 'next/link';
 import { createProposal } from '@/lib/supabase/proposals';
 import {
@@ -180,20 +180,10 @@ const NewProposalPage = () => {
             </Button>
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleLoadExample(initialAnswers)}
-                className="gap-2 text-amber-600 hover:text-amber-700 hover:bg-amber-50"
-              >
-                <Lightbulb className="w-4 h-4" />
-                <span className="hidden sm:inline">예시 답변 넣기</span>
-                <span className="sm:hidden">예시</span>
-              </Button>
               <Button variant="outline" size="sm" asChild>
                 <Link href="/proposal/drafts" className="gap-2">
                   <Save className="w-4 h-4" />
-                  <span className="hidden sm:inline">임시저장 목록</span>
+                  <span className="hidden sm:inline">제안서 목록</span>
                   <span className="sm:hidden">목록</span>
                 </Link>
               </Button>

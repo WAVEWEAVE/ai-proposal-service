@@ -118,8 +118,8 @@ const LoginPage = () => {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('userEmail', formData.email);
 
-      // 대시보드로 이동
-      router.push('/dashboard');
+      // 메인 페이지로 이동
+      router.push('/');
       router.refresh(); // 서버 컴포넌트 새로고침
     } catch (err) {
       console.error('[로그인 실패]', err);
