@@ -13,12 +13,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useAuthStore } from '@/lib/store/auth';
 
 /**
  * 히어로 섹션 컴포넌트
  */
 export const HeroSection: React.FC = () => {
   const router = useRouter();
+  const { user } = useAuthStore();
   const [formData, setFormData] = useState({
     expertise: '',
     industry: '',
@@ -48,18 +50,12 @@ export const HeroSection: React.FC = () => {
     
     console.log('[제안서 시작]', formData);
 
-    // 로그인 상태 확인
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    
-    if (!isLoggedIn) {
-      // 로그인 안 되어 있으면 로그인 페이지로
+    // 로그인 상태 확인 (Zustand 사용)
+    if (!user) {
+      // 로그인 안 되어 있으면 알림만 표시
       toast.info('로그인이 필요합니다', {
-        description: '제안서를 작성하려면 먼저 로그인해주세요.',
+        description: '상단의 Google로 로그인 버튼을 클릭해주세요.',
       });
-      
-      setTimeout(() => {
-        router.push('/login');
-      }, 500);
       return;
     }
     
