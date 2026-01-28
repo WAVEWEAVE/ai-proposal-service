@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 
 interface HeaderProps {
   user?: {
-    email: string;
+    email?: string;
     name?: string;
   } | null;
   onLogout?: () => void;
@@ -62,12 +62,12 @@ export const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
               <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-lg bg-muted">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                    {user.name?.charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase()}
+                    {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">{user.name || '사용자'}</span>
-                  <span className="text-xs text-muted-foreground">{user.email}</span>
+                  <span className="text-xs text-muted-foreground">{user.email || ''}</span>
                 </div>
               </div>
 
@@ -75,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
               <div className="md:hidden">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                    {user.email.charAt(0).toUpperCase()}
+                    {user.email?.charAt(0).toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
               </div>

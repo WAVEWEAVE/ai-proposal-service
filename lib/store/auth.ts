@@ -12,7 +12,7 @@ import { createClient } from '@/lib/supabase/client';
  */
 interface User {
   id: string;
-  email: string;
+  email?: string;
   user_metadata?: {
     full_name?: string;
     avatar_url?: string;
@@ -60,7 +60,10 @@ export const useAuthStore = create<AuthStore>()(
           const { data: { user }, error } = await supabase.auth.getUser();
           
           if (error) {
-            console.error('[Auth Store] 사용자 조회 실패:', error);
+            // 세션 없음은 정상 상황이므로 오류 로그 제거
+            if (error.message !== 'Auth session missing!') {
+              console.error('[Auth Store] 사용자 조회 실패:', error);
+            }
             set({ user: null, isLoading: false });
             return;
           }

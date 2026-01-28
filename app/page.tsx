@@ -164,7 +164,7 @@ const HomePage = () => {
       {/* 헤더 */}
       <Header 
         user={user ? {
-          email: user.email,
+          email: user.email || '',
           name: user.user_metadata?.full_name
         } : null} 
         onLogout={handleLogout} 
