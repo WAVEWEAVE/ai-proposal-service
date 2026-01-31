@@ -8,6 +8,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 /**
  * 미들웨어용 Supabase 클라이언트 생성 및 세션 갱신
+ * @returns 응답 객체와 사용자 정보
  */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -37,5 +38,5 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return supabaseResponse;
+  return { response: supabaseResponse, user };
 }
