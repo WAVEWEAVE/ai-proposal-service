@@ -149,10 +149,7 @@ export const HeroSection: React.FC = () => {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
 
-              {/* 안내 문구 */}
-              <p className="text-sm text-muted-foreground text-center">
-                💡 3초 가입하고 첫 제안서 무료로 시작하기
-              </p>
+             
             </CardContent>
           </Card>
 
