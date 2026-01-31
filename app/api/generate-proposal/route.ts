@@ -85,11 +85,11 @@ export async function POST(req: Request) {
     const validationResult = ProposalRequestSchema.safeParse(body);
     
     if (!validationResult.success) {
-      console.error('[입력 검증 오류]', validationResult.error.errors);
+      console.error('[입력 검증 오류]', validationResult.error.issues);
       return new Response(
         JSON.stringify({
           error: '입력 데이터가 유효하지 않습니다.',
-          details: validationResult.error.errors.map(err => ({
+          details: validationResult.error.issues.map(err => ({
             field: err.path.join('.'),
             message: err.message,
           })),
